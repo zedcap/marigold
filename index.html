@@ -3,11 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marigold - Weekly Business Review</title>
+<title>Marigold - Dashboard</title>
+<link rel="icon" href="https://marigold.global/cdn/shop/files/Favicon_32.png" type="image/png">
+<link rel="apple-touch-icon" href="https://marigold.global/cdn/shop/files/Favicon_32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  #dashboard-gate {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream, #FAF5ED);
+  }
   :root {
     --cream: #FAF5ED;
     --orange: #D4752E;
@@ -304,6 +314,23 @@
 </style>
 </head>
 <body>
+
+<div id="dashboard-gate" style="display:block;">
+  <div style="min-height:80vh;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;background:#FAF5ED;">
+    <div style="text-align:center;max-width:380px;padding:40px 24px;">
+      <p style="font-family:'DM Serif Display',serif;font-size:36px;letter-spacing:0.02em;line-height:0.95;color:#D4752E;margin-bottom:8px;">MARIGOLD CREW ONLY</p>
+      <div style="width:36px;height:1px;background:#D4752E;opacity:0.3;margin:0 auto 18px;"></div>
+      <p style="font-size:11px;letter-spacing:0.1em;color:#8C7E6E;line-height:1.7;margin-bottom:24px;">Enter your team password to log in.</p>
+      <div style="display:flex;gap:8px;">
+        <input type="password" id="dashboard-pw-input" placeholder="Password" style="flex:1;border:1px solid #E6DED2;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.1em;padding:11px 14px;border-radius:6px;outline:none;background:rgba(255,255,255,0.6);color:#1A1612;">
+        <button id="dashboard-pw-submit" style="background:#D4752E;color:#fff;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:11px 20px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;">ENTER</button>
+      </div>
+      <p id="dashboard-pw-error" style="display:none;font-size:11px;letter-spacing:0.1em;color:#C0392B;text-align:center;margin-top:10px;">Wrong password. Try again.</p>
+    </div>
+  </div>
+</div>
+
+<div id="dashboard-content" style="display:none;">
 
 <!-- HEADER -->
 <div class="hdr">
@@ -960,28 +987,79 @@
   </div>
 </div>
 
+</div><!-- end dashboard-content -->
+
 <script>
 (function() {
-  var now = new Date();
-  now.setHours(0,0,0,0);
-  document.querySelectorAll('.days-cell').forEach(function(cell) {
-    var dateStr = cell.getAttribute('data-last-order');
-    if (!dateStr) return;
-    var parts = dateStr.split('-');
-    var orderDate = new Date(parts[0], parts[1] - 1, parts[2]);
-    orderDate.setHours(0,0,0,0);
-    var diff = Math.floor((now - orderDate) / 86400000);
-    var badge = cell.querySelector('.dslo');
-    badge.textContent = diff;
-    badge.className = 'dslo';
-    if (diff <= 30) {
-      badge.classList.add('ok');
-    } else if (diff <= 60) {
-      badge.classList.add('warn');
-    } else {
-      badge.classList.add('bad');
-    }
-  });
+  'use strict';
+
+  var PW = 'Jalisco';
+  var COOKIE = 'marigold_dash_auth';
+
+  /* ---- PASSWORD AUTH ---- */
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+  function setCookie(name, val, days) {
+    var d = new Date();
+    d.setTime(d.getTime() + days * 86400000);
+    document.cookie = name + '=' + encodeURIComponent(val) + ';expires=' + d.toUTCString() + ';path=/';
+  }
+  function unlock() {
+    var gate = document.getElementById('dashboard-gate');
+    var content = document.getElementById('dashboard-content');
+    if (gate) gate.style.display = 'none';
+    if (content) content.style.display = 'block';
+    daysCalc();
+  }
+  if (getCookie(COOKIE) === 'granted') {
+    unlock();
+  }
+  var pwBtn = document.getElementById('dashboard-pw-submit');
+  var pwInput = document.getElementById('dashboard-pw-input');
+  var pwError = document.getElementById('dashboard-pw-error');
+  if (pwBtn) {
+    pwBtn.addEventListener('click', function() {
+      if (pwInput.value === PW) {
+        setCookie(COOKIE, 'granted', 30);
+        unlock();
+      } else {
+        pwError.style.display = 'block';
+        pwInput.value = '';
+      }
+    });
+  }
+  if (pwInput) {
+    pwInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') pwBtn.click();
+    });
+  }
+
+  /* ---- DAYS SINCE LAST ORDER CALCULATION ---- */
+  function daysCalc() {
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    document.querySelectorAll('.days-cell').forEach(function(cell) {
+      var dateStr = cell.getAttribute('data-last-order');
+      if (!dateStr) return;
+      var parts = dateStr.split('-');
+      var orderDate = new Date(parts[0], parts[1] - 1, parts[2]);
+      orderDate.setHours(0,0,0,0);
+      var diff = Math.floor((now - orderDate) / 86400000);
+      var badge = cell.querySelector('.dslo');
+      badge.textContent = diff;
+      badge.className = 'dslo';
+      if (diff <= 30) {
+        badge.classList.add('ok');
+      } else if (diff <= 60) {
+        badge.classList.add('warn');
+      } else {
+        badge.classList.add('bad');
+      }
+    });
+  }
+
 })();
 </script>
 </body>
