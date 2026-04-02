@@ -1,1 +1,988 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marigold - Weekly Business Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF5ED;
+    --orange: #D4752E;
+    --orange-dark: #A0561F;
+    --orange-light: #E8944D;
+    --dark: #1A1612;
+    --gray: #8C7E6E;
+    --gray-light: #A89A8A;
+    --border: #E6DED2;
+    --card: #FFFFFF;
+    --red: #C0392B;
+    --green: #27AE60;
+    --bg-warm: #F5F0E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .hdr { background: var(--dark); padding: 48px 40px 40px; position: relative; }
+  .hdr::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--orange); }
+  .hdr-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .hdr-brand { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .hdr h1 { font-family: 'DM Serif Display', serif; font-size: 42px; color: var(--cream); letter-spacing: -0.5px; }
+  .hdr-right { text-align: right; }
+  .hdr-date { font-size: 14px; color: var(--gray); }
+  .hdr-week { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--orange); }
+
+  /* ===== PAGE ===== */
+  .page { max-width: 1200px; margin: 0 auto; padding: 24px 32px 40px; }
+
+  /* ===== SECTIONS 1-4 ===== */
+  .sec { margin-bottom: 44px; }
+  .sec-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .sec-num {
+    font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--cream);
+    width: 32px; height: 32px; background: var(--orange); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .sec-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--dark); }
+
+  /* ===== GRID ===== */
+  .g { display: grid; gap: 12px; }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g-venue { grid-template-columns: repeat(3, 1fr); }
+
+  /* ===== CARD ===== */
+  .cd { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+
+  /* ===== METRIC ELEMENTS ===== */
+  .m-label {
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--dark); margin-bottom: 8px;
+  }
+  .m-hero-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .m-hero { font-family: 'DM Serif Display', serif; font-size: 38px; line-height: 1; color: var(--dark); }
+  .m-hero.orange { color: var(--orange); }
+  .m-hero.green { color: var(--green); }
+  .m-hero.red { color: var(--red); }
+  .m-wow { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+  .m-wow.up { background: #D5F5E3; color: #1E8449; }
+  .m-wow.down { background: #FADBD8; color: var(--red); }
+  .m-wow.flat { background: var(--bg-warm); color: var(--gray); }
+  .m-sub { font-size: 11px; color: var(--gray); margin-top: 3px; }
+  .m-div { border-top: 1px solid var(--border); margin: 10px 0; }
+
+  .m-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--gray); padding: 2px 0;
+  }
+  .m-row .v { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--dark); }
+  .m-row .v.orange { color: var(--orange); }
+  .m-row .v.red { color: var(--red); }
+  .m-row .v.green { color: var(--green); }
+  .m-row .v.dim { color: var(--gray); font-weight: 600; }
+  .m-row .pct {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 1px 5px; border-radius: 3px; margin-left: 4px; vertical-align: middle;
+  }
+  .pct.red { background: #FADBD8; color: var(--red); }
+  .pct.green { background: #D5F5E3; color: var(--green); }
+
+  .m-group-label {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--gray-light); margin-top: 8px; margin-bottom: 2px;
+  }
+  .m-group-label:first-child { margin-top: 0; }
+
+  .m-section-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--dark); margin: 0; padding: 6px 10px; background: var(--bg-warm); border-radius: 4px;
+  }
+
+  /* ===== LIST ROW ===== */
+  .lr { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 12px; }
+  .lr + .lr { border-top: 1px solid var(--border); }
+  .lr.nb { border-top: none !important; }
+  .lr .l { color: var(--gray); }
+  .lr .r { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--dark); }
+  .lr .r.big { font-family: 'DM Serif Display', serif; font-size: 18px; }
+  .lr .r.orange { color: var(--orange); }
+  .lr .r.red { color: var(--red); }
+  .lr .r.green { color: var(--green); }
+  .lr .note { font-size: 9px; color: var(--gray-light); font-weight: 400; margin-left: 3px; }
+  .lr .idr { font-weight: 700; color: var(--dark); }
+  .lr .usd { font-weight: 500; color: var(--gray-light); font-size: 11px; margin-left: 4px; }
+
+  .lr-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--dark); padding-top: 14px; padding-bottom: 4px;
+  }
+  .lr-title:first-child { padding-top: 0; }
+
+  .lr-div { border-top: 2px solid var(--border); margin: 2px 0; }
+  .lr-section-div { border-top: 1px solid var(--border); margin: 6px 0; }
+  .lr-result { border-top: 2px solid var(--dark); margin-top: 4px; padding-top: 6px; }
+
+  .lr-highlight {
+    background: var(--bg-warm); border-radius: 6px; padding: 10px 14px; margin-top: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .lr-highlight .hl { font-size: 13px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 1px; }
+  .lr-highlight .hv { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--dark); }
+  .lr-note { font-size: 12px; color: var(--gray); margin-top: 3px; text-align: center; }
+
+  /* Social */
+  .soc { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+  .soc + .soc { border-top: 1px solid var(--border); }
+  .soc-ico {
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .soc-ico.ig { background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF); }
+  .soc-ico.tt { background: #010101; }
+  .soc-info { flex: 1; }
+  .soc-name { font-size: 10px; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .soc-val { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--dark); line-height: 1.2; }
+  .soc-delta {
+    font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+  }
+  .soc-delta.up { background: #D5F5E3; color: #1E8449; }
+  .soc-delta.down { background: #FADBD8; color: #C0392B; }
+  .soc-delta .dw { font-size: 8px; font-weight: 500; opacity: 0.8; }
+
+  /* ===== TABLE ===== */
+  .tw { background: var(--card); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th {
+    background: var(--dark); color: var(--cream); padding: 10px 14px; text-align: left;
+    font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  thead th:first-child { border-radius: 10px 0 0 0; }
+  thead th:last-child { border-radius: 0 10px 0 0; }
+  thead th.r { text-align: right; }
+  thead th.c { text-align: center; }
+  thead th.hl { background: var(--orange); }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(212,117,46,0.03); }
+  .tn { font-weight: 600; color: var(--dark); }
+  .tv { text-align: right; font-variant-numeric: tabular-nums; color: var(--gray); }
+  .tv.has { color: var(--dark); font-weight: 600; }
+  .tv.orange { color: var(--orange); font-weight: 700; }
+  .tc { text-align: center; }
+  tfoot td {
+    padding: 11px 14px; font-weight: 700;
+    background: var(--dark); color: var(--cream); font-size: 12px;
+  }
+  tfoot .tv { color: var(--cream); font-weight: 700; }
+  tfoot .tv.orange { color: var(--orange); }
+  tfoot .tv.red { color: #F1948A; }
+
+  .dslo {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px; min-width: 26px; text-align: center;
+  }
+  .dslo.ok { background: #D5F5E3; color: #1E8449; }
+  .dslo.warn { background: #FEF5E7; color: var(--orange); }
+  .dslo.bad { background: #FADBD8; color: var(--red); }
+
+  /* ===== CHART ===== */
+  .chart-wrap { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .chart-svg { width: 100%; }
+  .cg { stroke: var(--border); stroke-width: 1; }
+  .cl { font-size: 10px; fill: var(--gray); font-family: 'DM Sans', sans-serif; }
+  .cline { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .cdot { stroke-width: 2; }
+  .chart-legend {
+    display: flex; gap: 16px; justify-content: center;
+    margin-top: 10px; font-size: 10px; color: var(--gray);
+  }
+  .chart-legend .dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 4px; vertical-align: middle;
+  }
+  .chart-legend strong { color: var(--dark); font-weight: 600; }
+
+  /* ===== INLINE CHART CARD (v4 side-by-side layout) ===== */
+  .chart-inline { grid-column: span 2; }
+  .chart-inline .chart-wrap { height: 100%; display: flex; flex-direction: column; }
+  .chart-inline .chart-wrap svg { flex: 1; }
+  .chart-inline-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--dark); margin-bottom: 8px;
+  }
+  .chart-inline-sub {
+    font-size: 10px; color: var(--gray); margin-bottom: 10px;
+  }
+
+  .src {
+    margin-top: 24px; padding: 10px 14px; background: var(--bg-warm); border-radius: 6px;
+    border-left: 3px solid var(--orange); font-size: 10px; color: var(--gray); line-height: 1.5;
+  }
+  .src strong { color: var(--dark); }
+
+  .break { border: none; border-top: 3px solid var(--orange); margin: 8px 0 28px; opacity: 0.3; }
+  .ftr {
+    background: var(--dark);
+    color: #FAF5ED;
+    padding: 32px 24px;
+    margin-top: 32px;
+    font-size: 11px;
+    line-height: 1.6;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-radius: 10px;
+  }
+  .ftr .ftr-left { max-width: 320px; }
+  .ftr .ftr-left .ftr-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .ftr .ftr-left p { color: #A89A8A; font-size: 10px; }
+  .ftr .ftr-right { text-align: right; }
+  .ftr .ftr-right p { color: #A89A8A; font-size: 10px; margin-bottom: 2px; }
+  .ftr .ftr-right .ftr-date { color: #FAF5ED; font-weight: 600; font-size: 11px; }
+
+  /* Venue table inside section 1 - card-like style */
+  .venue-inline table { font-size: 11px; border-radius: 6px; overflow: hidden; }
+  .venue-inline thead th {
+    background: var(--bg-warm); color: var(--gray); padding: 8px 10px; font-size: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .venue-inline thead th:first-child { border-radius: 6px 0 0 0; }
+  .venue-inline thead th:last-child { border-radius: 0 6px 0 0; }
+  .venue-inline thead th.hl { background: var(--bg-warm); color: var(--orange); font-weight: 700; }
+  .venue-inline tbody td { padding: 6px 10px; }
+  .venue-inline tbody tr:last-child td { border-bottom: none; }
+  .venue-inline .tn { font-size: 11px; }
+  .venue-inline .tv { font-size: 11px; }
+  .venue-inline .tc { font-size: 11px; }
+
+  /* Target vs Actual table inside chart card */
+  .target-table { margin-top: 12px; }
+  .target-table table { font-size: 10px; }
+  .target-table thead th {
+    background: var(--bg-warm); color: var(--gray); padding: 6px 8px; font-size: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .target-table thead th:first-child { border-radius: 6px 0 0 0; }
+  .target-table thead th:last-child { border-radius: 0 6px 0 0; }
+  .target-table thead th.hl { background: var(--bg-warm); color: var(--orange); font-weight: 700; }
+  .target-table tbody td { padding: 5px 8px; font-size: 10px; }
+  .target-table tfoot td { padding: 7px 8px; font-size: 10px; }
+
+  @media (max-width: 1000px) {
+    .g4 { grid-template-columns: repeat(2, 1fr); }
+    .g3 { grid-template-columns: 1fr; }
+    .g2 { grid-template-columns: 1fr; }
+    .g-venue { grid-template-columns: 1fr; }
+    .chart-inline { grid-column: span 1; }
+    .g-venue .cd[style*="span"] { grid-column: span 1; }
+  }
+  @media (max-width: 600px) {
+    .g4 { grid-template-columns: 1fr; }
+    .g3 { grid-template-columns: 1fr; }
+    .page { padding: 16px; }
+    .hdr-inner { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .hdr-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-brand">Marigold</div>
+      <h1>Weekly Business Review</h1>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-date">Week ending 29 March 2026</div>
+      <div class="hdr-week">Week 13</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ================================================================ -->
+<!-- 1. SALES & DISTRIBUTION                                         -->
+<!-- ================================================================ -->
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div class="sec-title">Sales & Distribution</div>
+  </div>
+
+  <!-- ROW 1: Bottles Sold card (1/3) + Monthly Trend chart (2/3) -->
+  <div class="g g3">
+
+    <!-- BOTTLES SOLD (last week: 6) -->
+    <div class="cd">
+      <div class="m-label">Weekly Sales</div>
+      <div class="m-hero-row">
+        <div class="m-hero orange">14</div>
+        <div class="m-wow up">+133% vs lw</div>
+      </div>
+      <div class="m-sub">bottles</div>
+      <div class="m-div"></div>
+      <div class="m-row">
+        <span>vs weekly Mar target (213)</span>
+        <span class="v red">6.6% <span class="pct red">-199</span></span>
+      </div>
+      <!-- Progress bar: 14 out of 213 = ~6.6% -->
+      <div style="height:5px;background:var(--bg-warm);border-radius:3px;margin-top:4px;overflow:hidden;">
+        <div style="height:100%;width:6.6%;min-width:3px;background:var(--red);border-radius:3px;"></div>
+      </div>
+      <div style="margin:36px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Lifetime</div>
+      <div class="m-row">
+        <span>Total sold</span>
+        <span class="v orange">301</span>
+      </div>
+      <div class="m-row">
+        <span>vs YTD target (1,500)</span>
+        <span class="v red">20.1% <span class="pct red">-1,199</span></span>
+      </div>
+      <!-- Progress bar: 301 out of 1,500 = 20.1% -->
+      <div style="height:5px;background:var(--bg-warm);border-radius:3px;margin-top:4px;overflow:hidden;">
+        <div style="height:100%;width:20.1%;background:var(--red);border-radius:3px;"></div>
+      </div>
+    </div>
+
+    <!-- MONTHLY TREND (bar chart) - 2/3 width -->
+    <div class="chart-inline">
+      <div class="chart-wrap" style="position:relative;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="chart-inline-title">Monthly Trend</div>
+            <div class="chart-inline-sub">Bottles sold vs target sales by month (6-month view).</div>
+          </div>
+          <div class="chart-legend" style="margin-top:0;justify-content:flex-end;flex-shrink:0;">
+            <div><span class="dot" style="background:#A0561F;"></span> <strong>Bottles Sold</strong></div>
+            <div><span class="dot" style="background:transparent;border:2px solid var(--orange);opacity:0.4;"></span> <strong>Target Sales</strong></div>
+          </div>
+        </div>
+        <!-- 6 months: Oct,Nov,Dec,Jan,Feb,Mar. Scale 0-1000, y=20..220=200px. 1 unit=0.2px. y=220-(val*0.2) -->
+        <!-- Bar centers: Oct=108, Nov=206, Dec=304, Jan=402, Feb=500, Mar=598. Bar width=24, gap=6 -->
+        <svg class="chart-svg" viewBox="0 0 680 260" preserveAspectRatio="xMidYMid meet">
+          <line class="cg" x1="60" y1="20" x2="650" y2="20"/>
+          <line class="cg" x1="60" y1="70" x2="650" y2="70"/>
+          <line class="cg" x1="60" y1="120" x2="650" y2="120"/>
+          <line class="cg" x1="60" y1="170" x2="650" y2="170"/>
+          <line class="cg" x1="60" y1="220" x2="650" y2="220"/>
+
+          <text class="cl" x="52" y="24" text-anchor="end">1,000</text>
+          <text class="cl" x="52" y="74" text-anchor="end">750</text>
+          <text class="cl" x="52" y="124" text-anchor="end">500</text>
+          <text class="cl" x="52" y="174" text-anchor="end">250</text>
+          <text class="cl" x="52" y="224" text-anchor="end">0</text>
+
+          <text class="cl" x="108" y="244" text-anchor="middle">Oct</text>
+          <text class="cl" x="206" y="244" text-anchor="middle">Nov</text>
+          <text class="cl" x="304" y="244" text-anchor="middle">Dec</text>
+          <text class="cl" x="402" y="244" text-anchor="middle">Jan</text>
+          <text class="cl" x="500" y="244" text-anchor="middle">Feb</text>
+          <text class="cl" x="598" y="244" text-anchor="middle">Mar</text>
+
+          <!-- OCT: Sold=0, Target=0 -->
+          <rect x="81" y="219" width="24" height="1" rx="2" fill="#A0561F" opacity="0.2"/>
+          <rect x="111" y="219" width="24" height="1" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" opacity="0.2"/>
+
+          <!-- NOV: Sold=0, Target=0 -->
+          <rect x="179" y="219" width="24" height="1" rx="2" fill="#A0561F" opacity="0.2"/>
+          <rect x="209" y="219" width="24" height="1" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" opacity="0.2"/>
+
+          <!-- DEC: Sold=105(h=21,y=199), Target=n/a (pre-launch) -->
+          <rect x="277" y="199" width="24" height="21" rx="2" fill="#A0561F"/>
+          <text class="cl" x="289" y="194" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">105</text>
+          <rect x="307" y="218" width="24" height="2" rx="1" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 2"/>
+          <text class="cl" x="319" y="213" text-anchor="middle" style="font-size:7px;fill:var(--gray-light);">n/a</text>
+
+          <!-- JAN: Sold=82(h=16.4,y=204), Target=150(h=30,y=190) -->
+          <rect x="375" y="204" width="24" height="16" rx="2" fill="#A0561F"/>
+          <text class="cl" x="387" y="199" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">82</text>
+          <rect x="405" y="190" width="24" height="30" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
+          <text class="cl" x="417" y="185" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">150</text>
+
+          <!-- FEB: Sold=32(h=6.4,y=214), Target=500(h=100,y=120) -->
+          <rect x="473" y="214" width="24" height="6" rx="2" fill="#A0561F"/>
+          <text class="cl" x="485" y="209" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">32</text>
+          <rect x="503" y="120" width="24" height="100" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
+          <text class="cl" x="515" y="115" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">500</text>
+
+          <!-- MAR: Sold=82(h=16.4,y=204), Target=850(h=170,y=50) -->
+          <rect x="571" y="204" width="24" height="16" rx="2" fill="#A0561F"/>
+          <text class="cl" x="583" y="199" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">82</text>
+          <rect x="601" y="50" width="24" height="170" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
+          <text class="cl" x="613" y="45" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">850</text>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: Distribution card + Top 10 table -->
+  <div class="g g3" style="margin-top:12px;">
+
+    <!-- DISTRIBUTION CARD -->
+    <div class="cd">
+      <div class="m-label">Distribution</div>
+      <div class="m-hero-row">
+        <div class="m-hero orange">2</div>
+        <div class="m-wow up">+2 vs lw</div>
+      </div>
+      <div class="m-sub">new last week</div>
+      <div style="margin:12px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Total Venues</div>
+      <div class="m-row">
+        <span>Total</span>
+        <span class="v orange">31</span>
+      </div>
+      <div class="m-row">
+        <span>Active (last 30d)</span>
+        <span class="v green">12</span>
+      </div>
+      <div class="m-row">
+        <span>Dormant (31-60d)</span>
+        <span class="v orange">3</span>
+      </div>
+      <div class="m-row">
+        <span>Inactive (60d+)</span>
+        <span class="v red">16</span>
+      </div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Reorder Velocity</div>
+      <div class="m-row">
+        <span>Avg reorder cycle</span>
+        <span class="v orange">51 days</span>
+      </div>
+      <div class="m-row">
+        <span>Venues reordering</span>
+        <span class="v">8 of 31 <span class="pct red">26%</span></span>
+      </div>
+    </div>
+
+    <!-- TOP 10 TABLE -->
+    <div class="cd venue-inline" style="grid-column: span 2;">
+      <div class="m-label">Top Ten Venues - Lifetime</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:3%;">#</th>
+            <th style="width:18%;">Name</th>
+            <th class="r" style="width:9%;">Paid</th>
+            <th class="r" style="width:9%;">FOC</th>
+            <th class="r" style="width:9%;">Total</th>
+            <th class="r hl" style="width:9%;">P&amp;L</th>
+            <th class="c" style="width:8%;">Orders</th>
+            <th class="c" style="width:11%;">Last Order</th>
+            <th class="c" style="width:8%;">Days</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tc" style="color:var(--orange);font-weight:700;">1</td>
+            <td class="tn">Potato Head</td>
+            <td class="tv has">54</td>
+            <td class="tv has">32</td>
+            <td class="tv orange">86</td>
+            <td class="tv" style="color:var(--red);">-$964</td>
+            <td class="tc">4</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">20 Feb</td>
+            <td class="tc days-cell" data-last-order="2026-02-20"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc" style="color:var(--orange);font-weight:700;">2</td>
+            <td class="tn">Boogaloo Bali</td>
+            <td class="tv has">42</td>
+            <td class="tv">0</td>
+            <td class="tv orange">42</td>
+            <td class="tv" style="color:var(--green);">+$163</td>
+            <td class="tc">7</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">23 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-23"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc" style="color:var(--orange);font-weight:700;">3</td>
+            <td class="tn">Viceroy Bali</td>
+            <td class="tv has">36</td>
+            <td class="tv">0</td>
+            <td class="tv orange">36</td>
+            <td class="tv" style="color:var(--green);">+$140</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">9 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-09"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">4</td>
+            <td class="tn">Regent Resort Canggu</td>
+            <td class="tv has">12</td>
+            <td class="tv has">6</td>
+            <td class="tv orange">18</td>
+            <td class="tv" style="color:var(--red);">-$173</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">30 Dec</td>
+            <td class="tc days-cell" data-last-order="2025-12-30"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">5</td>
+            <td class="tn">Klub Kembali</td>
+            <td class="tv has">12</td>
+            <td class="tv has">4</td>
+            <td class="tv orange">16</td>
+            <td class="tv" style="color:var(--red);">-$100</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">12 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-12"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">6</td>
+            <td class="tn">Amavi Canggu</td>
+            <td class="tv has">12</td>
+            <td class="tv has">4</td>
+            <td class="tv orange">16</td>
+            <td class="tv" style="color:var(--red);">-$100</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">13 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-13"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">7</td>
+            <td class="tn">Origen Mexican</td>
+            <td class="tv has">12</td>
+            <td class="tv has">2</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$27</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">9 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-09"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">8</td>
+            <td class="tn">Della Terra</td>
+            <td class="tv has">12</td>
+            <td class="tv has">2</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$27</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">10 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-10"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">9</td>
+            <td class="tn">Santanera</td>
+            <td class="tv has">6</td>
+            <td class="tv has">8</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$270</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">13 Feb</td>
+            <td class="tc days-cell" data-last-order="2026-02-13"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">10</td>
+            <td class="tn">El Bazar Lombok</td>
+            <td class="tv has">6</td>
+            <td class="tv has">2</td>
+            <td class="tv orange">8</td>
+            <td class="tv" style="color:var(--green);">+$193</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">27 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-27"><span class="dslo">--</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 2. MARKETING                                                     -->
+<!-- ================================================================ -->
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div class="sec-title">Trade Marketing</div>
+  </div>
+
+  <div class="g g3">
+
+    <!-- FOC BOTTLES (distribution tracker) -->
+    <div class="cd">
+      <div class="m-label">FOC Bottles</div>
+      <div class="m-hero-row">
+        <div class="m-hero">14</div>
+        <div class="m-wow up">+250% vs lw</div>
+      </div>
+      <div class="m-sub">last week</div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Last Week Breakdown</div>
+      <div class="m-row">
+        <span>FOC Sales</span>
+        <span class="v">2</span>
+      </div>
+      <div class="m-row">
+        <span>FOC Events</span>
+        <span class="v">6</span>
+      </div>
+      <div class="m-row">
+        <span>FOC Others</span>
+        <span class="v">6</span>
+      </div>
+      <div style="margin:18px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Lifetime</div>
+      <div class="m-row">
+        <span>Total FOC</span>
+        <span class="v">351</span>
+      </div>
+      <div class="m-row">
+        <span>vs YTD plan (100)</span>
+        <span class="v red">351% <span class="pct red">+251</span></span>
+      </div>
+    </div>
+
+    <!-- FOC COST (cost tracker) -->
+    <div class="cd">
+      <div class="m-label">FOC Cost</div>
+      <div class="m-hero-row">
+        <div class="m-hero red">-$513</div>
+      </div>
+      <div class="m-sub">last week</div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Last Week Breakdown</div>
+      <div class="m-row">
+        <span>FOC Sales</span>
+        <span class="v red">-$73</span>
+      </div>
+      <div class="m-row">
+        <span>FOC Events</span>
+        <span class="v red">-$220</span>
+      </div>
+      <div class="m-row">
+        <span>FOC Others</span>
+        <span class="v red">-$220</span>
+      </div>
+      <div style="margin:18px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Lifetime</div>
+      <div class="m-row">
+        <span>Total FOC Cost</span>
+        <span class="v red">-$12,870</span>
+      </div>
+      <div class="m-row">
+        <span>vs YTD plan ($3,667)</span>
+        <span class="v red">351% <span class="pct red">-$9,203</span></span>
+      </div>
+    </div>
+
+    <!-- TRADE ACTIVITY -->
+    <div class="cd">
+      <div class="m-label">Trade Activity</div>
+      <div class="m-hero-row">
+        <div class="m-hero dim">TBC</div>
+      </div>
+      <div class="m-sub">contacts last week</div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Last Week Breakdown</div>
+      <div class="m-row">
+        <span>Venue Visits</span>
+        <span class="v dim">TBC</span>
+      </div>
+      <div class="m-row">
+        <span>Tastings</span>
+        <span class="v dim">TBC</span>
+      </div>
+      <div class="m-row">
+        <span>Activations</span>
+        <span class="v dim">TBC</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 3. PRODUCT                                                       -->
+<!-- ================================================================ -->
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div class="sec-title">Product</div>
+  </div>
+
+  <div class="g g3">
+
+    <!-- AVAILABLE STOCK -->
+    <div class="cd">
+      <div class="m-label">Available Stock</div>
+      <div class="m-hero-row">
+        <div class="m-hero orange">237</div>
+      </div>
+      <div class="m-sub">bottles at ASD</div>
+      <div class="m-div"></div>
+      <div class="m-row">
+        <span>As of</span>
+        <span class="v">27 March 2026</span>
+      </div>
+
+      <div class="lr-highlight" style="margin-top:auto; padding-top:14px;">
+        <div class="hl">Weeks of Stock</div>
+        <div class="hv">~17 wks</div>
+      </div>
+      <div class="lr-note">237 btl at avg ~14 btl/wk</div>
+    </div>
+
+    <!-- INVENTORY PIPELINE -->
+    <div class="cd">
+      <div class="m-label">Pipeline</div>
+      <div style="margin-bottom:10px;"></div>
+      <div class="m-section-label">In Production</div>
+      <div class="m-row">
+        <span>Sababay</span>
+        <span class="v orange">445</span>
+      </div>
+      <div class="m-row">
+        <span>Spice Island</span>
+        <span class="v">0</span>
+      </div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Bulk Agave (IBCs)</div>
+      <div class="m-row">
+        <span>IBCs on hand</span>
+        <span class="v">13</span>
+      </div>
+      <div class="m-row">
+        <span>Equivalent bottles</span>
+        <span class="v">9,750</span>
+      </div>
+
+      <div class="lr-highlight" style="margin-top:auto; padding-top:14px;">
+        <div class="hl">Total Runway</div>
+        <div class="hv">~703 wks</div>
+      </div>
+      <div class="lr-note">237 + 9,750 = 9,987 btl at ~14 btl/wk</div>
+    </div>
+
+    <!-- PRODUCTION -->
+    <div class="cd">
+      <div class="m-label">Production</div>
+      <div style="margin-bottom:10px;"></div>
+      <div class="m-section-label">Sababay</div>
+      <div class="m-row">
+        <span>In production</span>
+        <span class="v orange">445</span>
+      </div>
+      <div class="m-row">
+        <span>Ready by</span>
+        <span class="v">TBD</span>
+      </div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Spice Island</div>
+      <div class="m-row">
+        <span>In production</span>
+        <span class="v">0</span>
+      </div>
+      <div class="m-row">
+        <span>Ready by</span>
+        <span class="v dim">TBC</span>
+      </div>
+      <div style="margin:14px -18px 10px;padding:0;"></div>
+      <div class="m-section-label">Ceramic Bottles (ZEN)</div>
+      <div class="m-row">
+        <span>Confirmed</span>
+        <span class="v">80</span>
+      </div>
+      <div class="m-row">
+        <span>Ready by</span>
+        <span class="v dim">TBC</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- 4. FINANCIAL                                                     -->
+<!-- ================================================================ -->
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div class="sec-title">Financial</div>
+  </div>
+
+  <div class="g g3">
+
+    <!-- MONTHLY P&L -->
+    <div class="cd">
+      <div class="m-label">Monthly Sales P&L</div>
+      <div class="m-sub" style="margin-bottom:10px;margin-top:-4px;">March 2026 (to date)</div>
+      <div class="lr" style="border-top:none;">
+        <span class="l">Gross Sales (82 btl)</span>
+        <span class="r orange">$3,325</span>
+      </div>
+      <div class="lr">
+        <span class="l">COGS</span>
+        <span class="r">-$3,007</span>
+      </div>
+      <div class="lr-div"></div>
+      <div class="lr">
+        <span class="l" style="font-weight:700;color:var(--dark);">Gross Profit</span>
+        <span class="r green">$318</span>
+      </div>
+      <div class="lr-div"></div>
+      <div class="lr">
+        <span class="l">FOC Cost (82 btl)</span>
+        <span class="r red">-$3,007</span>
+      </div>
+      <div class="lr">
+        <span class="l">Staff Costs</span>
+        <span class="r red">-$1,818</span>
+      </div>
+      <div class="lr-result">
+        <div class="lr" style="border-top:none;">
+          <span class="l" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);">Monthly Result</span>
+          <span class="r red" style="font-family:'DM Serif Display',serif;font-size:18px;">-$4,507</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIFETIME P&L -->
+    <div class="cd">
+      <div class="m-label">Lifetime Sales P&L</div>
+      <div class="m-sub" style="margin-bottom:10px;margin-top:-4px;">Dec 2025 to date</div>
+      <div class="lr" style="border-top:none;">
+        <span class="l">Gross Sales (301 btl)</span>
+        <span class="r orange">$12,204</span>
+      </div>
+      <div class="lr">
+        <span class="l">COGS</span>
+        <span class="r">-$11,036</span>
+      </div>
+      <div class="lr-div"></div>
+      <div class="lr">
+        <span class="l" style="font-weight:700;color:var(--dark);">Gross Profit</span>
+        <span class="r green">$1,168</span>
+      </div>
+      <div class="lr-div"></div>
+      <div class="lr">
+        <span class="l">FOC Cost (351 btl)</span>
+        <span class="r red">-$12,870</span>
+      </div>
+      <div class="lr">
+        <span class="l">Staff Costs (4 mo)</span>
+        <span class="r red">-$7,273</span>
+      </div>
+      <div class="lr-result">
+        <div class="lr" style="border-top:none;">
+          <span class="l" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);">Lifetime Result</span>
+          <span class="r red" style="font-family:'DM Serif Display',serif;font-size:18px;">-$18,974</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASH POSITION -->
+    <div class="cd">
+      <div class="m-label">Cash Position</div>
+      <div class="lr" style="border-top:none;">
+        <span class="l">Cash at Bank</span>
+        <span class="r green">$200k</span>
+      </div>
+      <div class="lr">
+        <span class="l">Accounts Receivable</span>
+        <span class="r">$19k</span>
+      </div>
+      <div class="lr">
+        <span class="l">Accounts Payable</span>
+        <span class="r">-$1.5k</span>
+      </div>
+      <div class="lr-result">
+        <div class="lr" style="border-top:none;">
+          <span class="l" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);">Total Available</span>
+          <span class="r green" style="font-family:'DM Serif Display',serif;font-size:18px;">~$218k</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; padding:12px; background:var(--bg-warm); border-radius:8px;">
+        <div style="font-size:9px; font-weight:500; text-transform:uppercase; letter-spacing:1px; color:var(--gray); margin-bottom:8px;">Current Unit Economics</div>
+        <div class="m-row" style="font-weight:400;">
+          <span>Revenue / bottle</span>
+          <span class="v" style="font-weight:400;"><span class="idr">669,000 IDR</span> <span class="usd">($40.55)</span></span>
+        </div>
+        <div class="m-row" style="font-weight:400;">
+          <span>COGS / bottle</span>
+          <span class="v" style="font-weight:400;"><span class="idr">604,979 IDR</span> <span class="usd">($36.67)</span></span>
+        </div>
+        <div class="m-row" style="font-weight:400;">
+          <span>Margin / bottle</span>
+          <span class="v" style="font-weight:400;"><span class="idr">64,021 IDR</span> <span class="usd">($3.88)</span></span>
+        </div>
+        <div class="m-row" style="font-weight:400;">
+          <span>Margin %</span>
+          <span class="v red" style="font-weight:400;">9.6%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="src">
+  <strong>Data source:</strong> ASD (PT Alam Satria Delapan) Mutasi per Barang, reconciled with WhatsApp. FOC Sales = bottles given to trade venues with orders. FOC Others = previously classified as internal use. Sales targets from Blanco volume plan. FOC plan from Trade Marketing budget. Updated weekly. Rate: 16,500 IDR/USD.
+</div>
+
+</div>
+
+<div class="ftr">
+  <div class="ftr-left">
+    <div class="ftr-brand">Marigold</div>
+    <p>Weekly Business Review<br>Confidential - Internal Use Only</p>
+  </div>
+  <div class="ftr-right">
+    <p class="ftr-date">Data as of 29 March 2026</p>
+    <p>Week 13 - Q1 2026</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var now = new Date();
+  now.setHours(0,0,0,0);
+  document.querySelectorAll('.days-cell').forEach(function(cell) {
+    var dateStr = cell.getAttribute('data-last-order');
+    if (!dateStr) return;
+    var parts = dateStr.split('-');
+    var orderDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    orderDate.setHours(0,0,0,0);
+    var diff = Math.floor((now - orderDate) / 86400000);
+    var badge = cell.querySelector('.dslo');
+    badge.textContent = diff;
+    badge.className = 'dslo';
+    if (diff <= 30) {
+      badge.classList.add('ok');
+    } else if (diff <= 60) {
+      badge.classList.add('warn');
+    } else {
+      badge.classList.add('bad');
+    }
+  });
+})();
+</script>
+</body>
+</html>
