@@ -223,7 +223,7 @@
   }
   .chart-legend strong { color: var(--dark); font-weight: 600; }
 
-  /* ===== INLINE CHART CARD (v4 side-by-side layout) ===== */
+  /* ===== INLINE CHART CARD ===== */
   .chart-inline { grid-column: span 2; }
   .chart-inline .chart-wrap { height: 100%; display: flex; flex-direction: column; }
   .chart-inline .chart-wrap svg { flex: 1; }
@@ -268,7 +268,7 @@
   .ftr .ftr-right p { color: #A89A8A; font-size: 10px; margin-bottom: 2px; }
   .ftr .ftr-right .ftr-date { color: #FAF5ED; font-weight: 600; font-size: 11px; }
 
-  /* Venue table inside section 1 - card-like style */
+  /* Venue table */
   .venue-inline table { font-size: 11px; border-radius: 6px; overflow: hidden; }
   .venue-inline thead th {
     background: var(--bg-warm); color: var(--gray); padding: 8px 10px; font-size: 8px;
@@ -283,7 +283,6 @@
   .venue-inline .tv { font-size: 11px; }
   .venue-inline .tc { font-size: 11px; }
 
-  /* Target vs Actual table inside chart card */
   .target-table { margin-top: 12px; }
   .target-table table { font-size: 10px; }
   .target-table thead th {
@@ -348,19 +347,15 @@
 
 <div class="page">
 
-<!-- ================================================================ -->
-<!-- 1. SALES & DISTRIBUTION                                         -->
-<!-- ================================================================ -->
+<!-- 1. SALES & DISTRIBUTION -->
 <div class="sec">
   <div class="sec-head">
     <div class="sec-num">1</div>
     <div class="sec-title">Sales & Distribution</div>
   </div>
 
-  <!-- ROW 1: Bottles Sold card (1/3) + Monthly Trend chart (2/3) -->
   <div class="g g3">
-
-    <!-- BOTTLES SOLD (last week: 6) -->
+    <!-- BOTTLES SOLD -->
     <div class="cd">
       <div class="m-label">Weekly Sales</div>
       <div class="m-hero-row">
@@ -370,30 +365,28 @@
       <div class="m-sub">bottles</div>
       <div class="m-div"></div>
       <div class="m-row">
-        <span>vs weekly Mar target (213)</span>
-        <span class="v red">6.6% <span class="pct red">-199</span></span>
+        <span>vs weekly Mar target (198)</span>
+        <span class="v red">7.1% <span class="pct red">-184</span></span>
       </div>
-      <!-- Progress bar: 14 out of 213 = ~6.6% -->
       <div style="height:5px;background:var(--bg-warm);border-radius:3px;margin-top:4px;overflow:hidden;">
-        <div style="height:100%;width:6.6%;min-width:3px;background:var(--red);border-radius:3px;"></div>
+        <div style="height:100%;width:7.1%;min-width:3px;background:var(--red);border-radius:3px;"></div>
       </div>
       <div style="margin:36px -18px 10px;padding:0;"></div>
       <div class="m-section-label">Lifetime</div>
       <div class="m-row">
         <span>Total sold</span>
-        <span class="v orange">301</span>
+        <span class="v orange">322</span>
       </div>
       <div class="m-row">
         <span>vs YTD target (1,500)</span>
-        <span class="v red">20.1% <span class="pct red">-1,199</span></span>
+        <span class="v red">21.5% <span class="pct red">-1,178</span></span>
       </div>
-      <!-- Progress bar: 301 out of 1,500 = 20.1% -->
       <div style="height:5px;background:var(--bg-warm);border-radius:3px;margin-top:4px;overflow:hidden;">
-        <div style="height:100%;width:20.1%;background:var(--red);border-radius:3px;"></div>
+        <div style="height:100%;width:21.5%;background:var(--red);border-radius:3px;"></div>
       </div>
     </div>
 
-    <!-- MONTHLY TREND (bar chart) - 2/3 width -->
+    <!-- MONTHLY TREND CHART -->
     <div class="chart-inline">
       <div class="chart-wrap" style="position:relative;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -406,8 +399,6 @@
             <div><span class="dot" style="background:transparent;border:2px solid var(--orange);opacity:0.4;"></span> <strong>Target Sales</strong></div>
           </div>
         </div>
-        <!-- 6 months: Oct,Nov,Dec,Jan,Feb,Mar. Scale 0-1000, y=20..220=200px. 1 unit=0.2px. y=220-(val*0.2) -->
-        <!-- Bar centers: Oct=108, Nov=206, Dec=304, Jan=402, Feb=500, Mar=598. Bar width=24, gap=6 -->
         <svg class="chart-svg" viewBox="0 0 680 260" preserveAspectRatio="xMidYMid meet">
           <line class="cg" x1="60" y1="20" x2="650" y2="20"/>
           <line class="cg" x1="60" y1="70" x2="650" y2="70"/>
@@ -428,47 +419,45 @@
           <text class="cl" x="500" y="244" text-anchor="middle">Feb</text>
           <text class="cl" x="598" y="244" text-anchor="middle">Mar</text>
 
-          <!-- OCT: Sold=0, Target=0 -->
+          <!-- Oct: Sold=0, Target=0 -->
           <rect x="81" y="219" width="24" height="1" rx="2" fill="#A0561F" opacity="0.2"/>
           <rect x="111" y="219" width="24" height="1" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" opacity="0.2"/>
 
-          <!-- NOV: Sold=0, Target=0 -->
+          <!-- Nov: Sold=0, Target=0 -->
           <rect x="179" y="219" width="24" height="1" rx="2" fill="#A0561F" opacity="0.2"/>
           <rect x="209" y="219" width="24" height="1" rx="2" fill="none" stroke="var(--orange)" stroke-width="1.5" opacity="0.2"/>
 
-          <!-- DEC: Sold=105(h=21,y=199), Target=n/a (pre-launch) -->
-          <rect x="277" y="199" width="24" height="21" rx="2" fill="#A0561F"/>
-          <text class="cl" x="289" y="194" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">105</text>
+          <!-- Dec: Sold=121, Target=0 -->
+          <rect x="277" y="196" width="24" height="24" rx="2" fill="#A0561F"/>
+          <text class="cl" x="289" y="191" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">121</text>
           <rect x="307" y="218" width="24" height="2" rx="1" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 2"/>
           <text class="cl" x="319" y="213" text-anchor="middle" style="font-size:7px;fill:var(--gray-light);">n/a</text>
 
-          <!-- JAN: Sold=82(h=16.4,y=204), Target=150(h=30,y=190) -->
-          <rect x="375" y="204" width="24" height="16" rx="2" fill="#A0561F"/>
-          <text class="cl" x="387" y="199" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">82</text>
+          <!-- Jan: Sold=85, Target=150 -->
+          <rect x="375" y="203" width="24" height="17" rx="2" fill="#A0561F"/>
+          <text class="cl" x="387" y="198" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">85</text>
           <rect x="405" y="190" width="24" height="30" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
           <text class="cl" x="417" y="185" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">150</text>
 
-          <!-- FEB: Sold=32(h=6.4,y=214), Target=500(h=100,y=120) -->
-          <rect x="473" y="214" width="24" height="6" rx="2" fill="#A0561F"/>
-          <text class="cl" x="485" y="209" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">32</text>
+          <!-- Feb: Sold=34, Target=500 -->
+          <rect x="473" y="213" width="24" height="7" rx="2" fill="#A0561F"/>
+          <text class="cl" x="485" y="208" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">34</text>
           <rect x="503" y="120" width="24" height="100" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
           <text class="cl" x="515" y="115" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">500</text>
 
-          <!-- MAR: Sold=82(h=16.4,y=204), Target=850(h=170,y=50) -->
+          <!-- Mar: Sold=82, Target=850 -->
           <rect x="571" y="204" width="24" height="16" rx="2" fill="#A0561F"/>
           <text class="cl" x="583" y="199" text-anchor="middle" style="font-weight:700;font-size:9px;fill:#A0561F;">82</text>
           <rect x="601" y="50" width="24" height="170" rx="2" fill="none" stroke="var(--orange)" stroke-width="2" opacity="0.4"/>
           <text class="cl" x="613" y="45" text-anchor="middle" style="font-weight:600;font-size:9px;fill:var(--orange);opacity:0.6;">850</text>
+
         </svg>
       </div>
     </div>
-
   </div>
 
-  <!-- ROW 2: Distribution card + Top 10 table -->
+  <!-- ROW 2: Distribution + Top 10 -->
   <div class="g g3" style="margin-top:12px;">
-
-    <!-- DISTRIBUTION CARD -->
     <div class="cd">
       <div class="m-label">Distribution</div>
       <div class="m-hero-row">
@@ -480,29 +469,29 @@
       <div class="m-section-label">Total Venues</div>
       <div class="m-row">
         <span>Total</span>
-        <span class="v orange">31</span>
+        <span class="v orange">34</span>
       </div>
       <div class="m-row">
         <span>Active (last 30d)</span>
-        <span class="v green">12</span>
+        <span class="v green">7</span>
       </div>
       <div class="m-row">
         <span>Dormant (31-60d)</span>
-        <span class="v orange">3</span>
+        <span class="v orange">8</span>
       </div>
       <div class="m-row">
         <span>Inactive (60d+)</span>
-        <span class="v red">16</span>
+        <span class="v red">19</span>
       </div>
       <div style="margin:14px -18px 10px;padding:0;"></div>
       <div class="m-section-label">Reorder Velocity</div>
       <div class="m-row">
         <span>Avg reorder cycle</span>
-        <span class="v orange">51 days</span>
+        <span class="v orange">36 days</span>
       </div>
       <div class="m-row">
         <span>Venues reordering</span>
-        <span class="v">8 of 31 <span class="pct red">26%</span></span>
+        <span class="v">9 of 34 <span class="pct red">26%</span></span>
       </div>
     </div>
 
@@ -530,40 +519,40 @@
             <td class="tv has">54</td>
             <td class="tv has">32</td>
             <td class="tv orange">86</td>
-            <td class="tv" style="color:var(--red);">-$590</td>
+            <td class="tv" style="color:var(--red);">-$964</td>
             <td class="tc">4</td>
             <td class="tc" style="font-size:11px;color:var(--gray);">20 Feb</td>
             <td class="tc days-cell" data-last-order="2026-02-20"><span class="dslo">--</span></td>
           </tr>
           <tr>
             <td class="tc" style="color:var(--orange);font-weight:700;">2</td>
-            <td class="tn">Boogaloo Bali</td>
-            <td class="tv has">42</td>
-            <td class="tv">0</td>
-            <td class="tv orange">42</td>
-            <td class="tv" style="color:var(--green);">+$163</td>
-            <td class="tc">7</td>
-            <td class="tc" style="font-size:11px;color:var(--gray);">23 Mar</td>
-            <td class="tc days-cell" data-last-order="2026-03-23"><span class="dslo">--</span></td>
-          </tr>
-          <tr>
-            <td class="tc" style="color:var(--orange);font-weight:700;">3</td>
             <td class="tn">Viceroy Bali</td>
             <td class="tv has">36</td>
-            <td class="tv has">6</td>
-            <td class="tv orange">42</td>
-            <td class="tv" style="color:var(--red);">-$10</td>
+            <td class="tv">0</td>
+            <td class="tv orange">36</td>
+            <td class="tv" style="color:var(--green);">+$140</td>
             <td class="tc">2</td>
             <td class="tc" style="font-size:11px;color:var(--gray);">9 Mar</td>
             <td class="tc days-cell" data-last-order="2026-03-09"><span class="dslo">--</span></td>
           </tr>
           <tr>
+            <td class="tc" style="color:var(--orange);font-weight:700;">3</td>
+            <td class="tn">Boogaloo Bali</td>
+            <td class="tv has">36</td>
+            <td class="tv">0</td>
+            <td class="tv orange">36</td>
+            <td class="tv" style="color:var(--green);">+$140</td>
+            <td class="tc">6</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">23 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-23"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
             <td class="tc">4</td>
-            <td class="tn">Origen Mexican</td>
+            <td class="tn">Origen Mexican Restaurant</td>
             <td class="tv has">12</td>
             <td class="tv has">14</td>
             <td class="tv orange">26</td>
-            <td class="tv" style="color:var(--red);">-$303</td>
+            <td class="tv" style="color:var(--red);">-$467</td>
             <td class="tc">2</td>
             <td class="tc" style="font-size:11px;color:var(--gray);">9 Mar</td>
             <td class="tc days-cell" data-last-order="2026-03-09"><span class="dslo">--</span></td>
@@ -574,13 +563,57 @@
             <td class="tv has">12</td>
             <td class="tv has">6</td>
             <td class="tv orange">18</td>
-            <td class="tv" style="color:var(--red);">-$103</td>
+            <td class="tv" style="color:var(--red);">-$173</td>
             <td class="tc">1</td>
             <td class="tc" style="font-size:11px;color:var(--gray);">30 Dec</td>
             <td class="tc days-cell" data-last-order="2025-12-30"><span class="dslo">--</span></td>
           </tr>
           <tr>
             <td class="tc">6</td>
+            <td class="tn">Amavi Canggu</td>
+            <td class="tv has">12</td>
+            <td class="tv has">4</td>
+            <td class="tv orange">16</td>
+            <td class="tv" style="color:var(--red);">-$100</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">13 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-13"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">7</td>
+            <td class="tn">Della Terra</td>
+            <td class="tv has">12</td>
+            <td class="tv has">2</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$27</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">10 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-10"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">8</td>
+            <td class="tn">Santanera</td>
+            <td class="tv has">6</td>
+            <td class="tv has">8</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$270</td>
+            <td class="tc">1</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">13 Feb</td>
+            <td class="tc days-cell" data-last-order="2026-02-13"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">9</td>
+            <td class="tn">Klub Kembali</td>
+            <td class="tv has">12</td>
+            <td class="tv has">2</td>
+            <td class="tv orange">14</td>
+            <td class="tv" style="color:var(--red);">-$27</td>
+            <td class="tc">2</td>
+            <td class="tc" style="font-size:11px;color:var(--gray);">12 Mar</td>
+            <td class="tc days-cell" data-last-order="2026-03-12"><span class="dslo">--</span></td>
+          </tr>
+          <tr>
+            <td class="tc">10</td>
             <td class="tn">Drink Better</td>
             <td class="tv has">12</td>
             <td class="tv">0</td>
@@ -590,60 +623,13 @@
             <td class="tc" style="font-size:11px;color:var(--gray);">16 Mar</td>
             <td class="tc days-cell" data-last-order="2026-03-16"><span class="dslo">--</span></td>
           </tr>
-          <tr>
-            <td class="tc">7</td>
-            <td class="tn">Della Terra</td>
-            <td class="tv has">12</td>
-            <td class="tv has">2</td>
-            <td class="tv orange">14</td>
-            <td class="tv" style="color:var(--red);">-$3</td>
-            <td class="tc">2</td>
-            <td class="tc" style="font-size:11px;color:var(--gray);">10 Mar</td>
-            <td class="tc days-cell" data-last-order="2026-03-10"><span class="dslo">--</span></td>
-          </tr>
-          <tr>
-            <td class="tc">8</td>
-            <td class="tn">Klub Kembali</td>
-            <td class="tv has">12</td>
-            <td class="tv has">4</td>
-            <td class="tv orange">16</td>
-            <td class="tv" style="color:var(--red);">-$53</td>
-            <td class="tc">2</td>
-            <td class="tc" style="font-size:11px;color:var(--gray);">12 Mar</td>
-            <td class="tc days-cell" data-last-order="2026-03-12"><span class="dslo">--</span></td>
-          </tr>
-          <tr>
-            <td class="tc">9</td>
-            <td class="tn">Amavi Canggu</td>
-            <td class="tv has">12</td>
-            <td class="tv has">4</td>
-            <td class="tv orange">16</td>
-            <td class="tv" style="color:var(--red);">-$53</td>
-            <td class="tc">1</td>
-            <td class="tc" style="font-size:11px;color:var(--gray);">13 Mar</td>
-            <td class="tc days-cell" data-last-order="2026-03-13"><span class="dslo">--</span></td>
-          </tr>
-          <tr>
-            <td class="tc">10</td>
-            <td class="tn">TYGR Berawa</td>
-            <td class="tv has">8</td>
-            <td class="tv">0</td>
-            <td class="tv orange">8</td>
-            <td class="tv" style="color:var(--green);">+$31</td>
-            <td class="tc">1</td>
-            <td class="tc" style="font-size:11px;color:var(--gray);">7 Jan</td>
-            <td class="tc days-cell" data-last-order="2026-01-07"><span class="dslo">--</span></td>
-          </tr>
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 
-<!-- ================================================================ -->
-<!-- 2. MARKETING                                                     -->
-<!-- ================================================================ -->
+<!-- 2. TRADE MARKETING -->
 <div class="sec">
   <div class="sec-head">
     <div class="sec-num">2</div>
@@ -651,13 +637,11 @@
   </div>
 
   <div class="g g3">
-
-    <!-- FOC BOTTLES (distribution tracker) -->
+    <!-- FOC BOTTLES -->
     <div class="cd">
       <div class="m-label">FOC Bottles</div>
       <div class="m-hero-row">
         <div class="m-hero">14</div>
-        <div class="m-wow up">+250% vs lw</div>
       </div>
       <div class="m-sub">last week</div>
       <div style="margin:14px -18px 10px;padding:0;"></div>
@@ -678,15 +662,15 @@
       <div class="m-section-label">Lifetime</div>
       <div class="m-row">
         <span>Total FOC</span>
-        <span class="v">351</span>
+        <span class="v">346</span>
       </div>
       <div class="m-row">
         <span>vs YTD plan (100)</span>
-        <span class="v red">351% <span class="pct red">+251</span></span>
+        <span class="v red">346% <span class="pct red">+246</span></span>
       </div>
     </div>
 
-    <!-- FOC COST (cost tracker) -->
+    <!-- FOC COST -->
     <div class="cd">
       <div class="m-label">FOC Cost</div>
       <div class="m-hero-row">
@@ -711,11 +695,11 @@
       <div class="m-section-label">Lifetime</div>
       <div class="m-row">
         <span>Total FOC Cost</span>
-        <span class="v red">-$12,870</span>
+        <span class="v red">-$12,686</span>
       </div>
       <div class="m-row">
-        <span>vs YTD plan ($3,667)</span>
-        <span class="v red">351% <span class="pct red">-$9,203</span></span>
+        <span>vs YTD plan ($2,500)</span>
+        <span class="v red">507% <span class="pct red">-$10,186</span></span>
       </div>
     </div>
 
@@ -723,14 +707,14 @@
     <div class="cd">
       <div class="m-label">Trade Activity</div>
       <div class="m-hero-row">
-        <div class="m-hero">0</div>
+        <div class="m-hero">1</div>
       </div>
       <div class="m-sub">contacts last week</div>
       <div style="margin:14px -18px 10px;padding:0;"></div>
       <div class="m-section-label">Last Week Breakdown</div>
       <div class="m-row">
         <span>Venue Visits</span>
-        <span class="v">0</span>
+        <span class="v">1</span>
       </div>
       <div class="m-row">
         <span>Tastings</span>
@@ -741,13 +725,10 @@
         <span class="v">0</span>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ================================================================ -->
-<!-- 3. PRODUCT                                                       -->
-<!-- ================================================================ -->
+<!-- 3. PRODUCT -->
 <div class="sec">
   <div class="sec-head">
     <div class="sec-num">3</div>
@@ -755,7 +736,6 @@
   </div>
 
   <div class="g g3">
-
     <!-- AVAILABLE STOCK -->
     <div class="cd">
       <div class="m-label">Available Stock</div>
@@ -768,15 +748,14 @@
         <span>As of</span>
         <span class="v">27 March 2026</span>
       </div>
-
       <div class="lr-highlight" style="margin-top:auto; padding-top:14px;">
         <div class="hl">Weeks of Stock</div>
-        <div class="hv">~17 wks</div>
+        <div class="hv">~12 wks</div>
       </div>
-      <div class="lr-note">237 btl at avg ~14 btl/wk</div>
+      <div class="lr-note">237 btl at avg ~19 btl/wk</div>
     </div>
 
-    <!-- INVENTORY PIPELINE -->
+    <!-- PIPELINE -->
     <div class="cd">
       <div class="m-label">Pipeline</div>
       <div style="margin-bottom:10px;"></div>
@@ -799,12 +778,11 @@
         <span>Equivalent bottles</span>
         <span class="v">9,750</span>
       </div>
-
       <div class="lr-highlight" style="margin-top:auto; padding-top:14px;">
         <div class="hl">Total Runway</div>
-        <div class="hv">~703 wks</div>
+        <div class="hv">~526 wks</div>
       </div>
-      <div class="lr-note">237 + 9,750 = 9,987 btl at ~14 btl/wk</div>
+      <div class="lr-note">237 + 9,750 = 9,987 btl at ~19 btl/wk</div>
     </div>
 
     <!-- PRODUCTION -->
@@ -828,7 +806,7 @@
       </div>
       <div class="m-row">
         <span>Ready by</span>
-        <span class="v dim">TBC</span>
+        <span class="v dim">TBD</span>
       </div>
       <div style="margin:14px -18px 10px;padding:0;"></div>
       <div class="m-section-label">Ceramic Bottles (ZEN)</div>
@@ -838,16 +816,13 @@
       </div>
       <div class="m-row">
         <span>Ready by</span>
-        <span class="v dim">TBC</span>
+        <span class="v dim">TBD</span>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ================================================================ -->
-<!-- 4. FINANCIAL                                                     -->
-<!-- ================================================================ -->
+<!-- 4. FINANCIAL -->
 <div class="sec">
   <div class="sec-head">
     <div class="sec-num">4</div>
@@ -855,11 +830,10 @@
   </div>
 
   <div class="g g3">
-
     <!-- MONTHLY P&L -->
     <div class="cd">
       <div class="m-label">Monthly Sales P&L</div>
-      <div class="m-sub" style="margin-bottom:10px;margin-top:-4px;">March 2026 (to date)</div>
+      <div class="m-sub" style="margin-bottom:10px;margin-top:-4px;">Mar 2026 (to date)</div>
       <div class="lr" style="border-top:none;">
         <span class="l">Gross Sales (82 btl)</span>
         <span class="r orange">$3,325</span>
@@ -895,22 +869,22 @@
       <div class="m-label">Lifetime Sales P&L</div>
       <div class="m-sub" style="margin-bottom:10px;margin-top:-4px;">Dec 2025 to date</div>
       <div class="lr" style="border-top:none;">
-        <span class="l">Gross Sales (301 btl)</span>
-        <span class="r orange">$12,204</span>
+        <span class="l">Gross Sales (322 btl)</span>
+        <span class="r orange">$13,056</span>
       </div>
       <div class="lr">
         <span class="l">COGS</span>
-        <span class="r">-$11,036</span>
+        <span class="r">-$11,806</span>
       </div>
       <div class="lr-div"></div>
       <div class="lr">
         <span class="l" style="font-weight:700;color:var(--dark);">Gross Profit</span>
-        <span class="r green">$1,168</span>
+        <span class="r green">$1,249</span>
       </div>
       <div class="lr-div"></div>
       <div class="lr">
-        <span class="l">FOC Cost (351 btl)</span>
-        <span class="r red">-$12,870</span>
+        <span class="l">FOC Cost (346 btl)</span>
+        <span class="r red">-$12,686</span>
       </div>
       <div class="lr">
         <span class="l">Staff Costs (4 mo)</span>
@@ -919,7 +893,7 @@
       <div class="lr-result">
         <div class="lr" style="border-top:none;">
           <span class="l" style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);">Lifetime Result</span>
-          <span class="r red" style="font-family:'DM Serif Display',serif;font-size:18px;">-$18,974</span>
+          <span class="r red" style="font-family:'DM Serif Display',serif;font-size:18px;">-$18,710</span>
         </div>
       </div>
     </div>
@@ -966,12 +940,11 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <div class="src">
-  <strong>Data source:</strong> ASD (PT Alam Satria Delapan) Mutasi per Barang, reconciled with WhatsApp. FOC Sales = bottles given to trade venues with orders. FOC Others = previously classified as internal use. Sales targets from Blanco volume plan. FOC plan from Trade Marketing budget. Updated weekly. Rate: 16,500 IDR/USD.
+  <strong>Data source:</strong> ASD (PT Alam Satria Delapan) Mutasi per Barang, reconciled via Marigold Looker (Google Sheets). FOC Sales = bottles given to trade venues with orders. FOC Others = strategic, samples, internal, new market. Sales targets from Blanco volume plan. FOC plan from Trade Marketing budget. Updated weekly. Rate: 16,500 IDR/USD.
 </div>
 
 </div>
@@ -982,7 +955,7 @@
     <p>Weekly Business Review<br>Confidential - Internal Use Only</p>
   </div>
   <div class="ftr-right">
-    <p class="ftr-date">Data as of 29 March 2026</p>
+    <p class="ftr-date">Data as of 27 March 2026</p>
     <p>Week 13 - Q1 2026</p>
   </div>
 </div>
@@ -996,7 +969,6 @@
   var PW = 'Jalisco';
   var COOKIE = 'marigold_dash_auth';
 
-  /* ---- PASSWORD AUTH ---- */
   function getCookie(name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     return match ? decodeURIComponent(match[2]) : null;
@@ -1036,7 +1008,6 @@
     });
   }
 
-  /* ---- DAYS SINCE LAST ORDER CALCULATION ---- */
   function daysCalc() {
     var now = new Date();
     now.setHours(0,0,0,0);
